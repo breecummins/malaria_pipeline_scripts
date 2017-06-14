@@ -9,7 +9,7 @@ cd $DATADIR
 
 echo `ls`
 
-for DIR in 	`ls`
+for DIR in `ls -d */`
 do
 cd $FILE
 gzip -d *.gz
