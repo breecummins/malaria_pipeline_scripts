@@ -11,7 +11,7 @@ echo `ls`
 
 for DIR in `ls -d */`
 do
-cd $FILE
+cd $DIR
 gzip -d *.gz
 cat *.fastq > combined.fastq
 
