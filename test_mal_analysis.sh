@@ -2,12 +2,10 @@
 
 #test script for malaria
 
-DATADIR=/work/bc187/Cho_4189_170609A5/
-GENOMEDIR=/work/bc187/vivax_genome/star_format/
+DATADIR=/work/bc187/Cho_4189_170609A5
+GENOMEDIR=/work/bc187/vivax_genome/star_format
 
 cd $DATADIR
-
-echo `ls`
 
 for DIR in `ls -d */`
 do
