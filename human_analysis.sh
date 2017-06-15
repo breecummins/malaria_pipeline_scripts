@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
-#Tina's script for malaria and human genome
+# call as: screen -d -m srun --partition=harerlab --mem=0 --output=slurm.log ./build_genome.sh
+# --mem=0 required to access all memory on node
 
 DATADIR=/work/bc187/Cho_4189_170609A5
 GENOMEDIR=/work/bc187/human_genome/star_format
