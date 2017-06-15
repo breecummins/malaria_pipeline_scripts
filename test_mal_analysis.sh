@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-# call as: screen -d -m srun --partition=harerlab --mem=0 --output=slurm.log ./build_genome.sh
+# call as: screen -d -m srun --partition=harerlab --mem=0 --output=slurm.log ./test_mal_analysis.sh
 # --mem=0 required to access all memory on node
 
 DATADIR=/work/bc187/Cho_4189_170609A5
