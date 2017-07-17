@@ -21,7 +21,7 @@ cd $DATADIR
 # rm combined.fastq
 # gzip *.fastq
 
-cd STAR_out_mal
+cd S1/STAR_out_mal
 samtools view -h Aligned.out.sam > Aligned.out.bam
 samtools sort Aligned.out.bam Aligned.out.sorted
 samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
