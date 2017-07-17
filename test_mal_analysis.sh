@@ -35,5 +35,5 @@ cuffquant --library-type=fr-firststrand $GFFPATH Aligned.out.sorted.sam
 
 cd ..
 cd ..
-done
+# done
 
