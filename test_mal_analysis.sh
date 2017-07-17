@@ -28,9 +28,9 @@ samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
 
 cuffquant --library-type=fr-firststrand <path_to_GFF/GTF_transcriptome_annot> Aligned.out.sorted.sam
 
-rm Aligned.out.sam
-rm Aligned.out.bam
-rm Aligned.out.sorted.sam
+# rm Aligned.out.sam
+# rm Aligned.out.bam
+# rm Aligned.out.sorted.sam
 
 cd ..
 cd ..
