@@ -5,6 +5,7 @@
 
 DATADIR=/work/bc187/Cho_4189_170609A5
 GENOMEDIR=/work/bc187/vivax_genome/star_format
+GFFPATH=/work/bc187/vivax_genome/PlasmoDB-32_PvivaxP01.gff
 
 cd $DATADIR
 
@@ -26,7 +27,7 @@ samtools view -h Aligned.out.sam > Aligned.out.bam
 samtools sort Aligned.out.bam > Aligned.out.sorted
 samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
 
-cuffquant --library-type=fr-firststrand <path_to_GFF/GTF_transcriptome_annot> Aligned.out.sorted.sam
+cuffquant --library-type=fr-firststrand $GFFPATH Aligned.out.sorted.sam
 
 # rm Aligned.out.sam
 # rm Aligned.out.bam
