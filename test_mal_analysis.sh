@@ -23,7 +23,7 @@ cd $DATADIR
 
 cd S1/STAR_out_mal
 samtools view -h Aligned.out.sam > Aligned.out.bam
-samtools sort Aligned.out.bam Aligned.out.sorted
+samtools sort Aligned.out.bam > Aligned.out.sorted
 samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
 
 cuffquant --library-type=fr-firststrand <path_to_GFF/GTF_transcriptome_annot> Aligned.out.sorted.sam
