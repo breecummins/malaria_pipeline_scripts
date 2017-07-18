@@ -2,7 +2,7 @@
 
 # Altered Tina's script for malaria and human genome
 
-# call as: screen -d -m srun --partition=harerlab --mem=0 --output=slurm.log ./test_mal_analysis.sh <top level data dir>
+# call as: screen -d -m srun --partition=harerlab --mem=0 --output=slurm.log ./mal_hum_analysis2.sh <top level data dir>
 # --mem=0 required to access all memory on node
 
 # DATADIR=/work/bc187/Cho_4189_170609A5
@@ -41,7 +41,7 @@ samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
 
 cuffquant --library-type=fr-firststrand $MALGFFPATH Aligned.out.sorted.sam
 
-# rm Aligned.out.sam
+rm Aligned.out.sam
 rm Aligned.out.bam
 rm Aligned.out.sorted.sam
 
@@ -54,7 +54,7 @@ samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
 
 cuffquant --library-type=fr-firststrand $HUMGFFPATH Aligned.out.sorted.sam
 
-# rm Aligned.out.sam
+rm Aligned.out.sam
 rm Aligned.out.bam
 rm Aligned.out.sorted.sam
 
