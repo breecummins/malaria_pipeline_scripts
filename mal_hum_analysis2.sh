@@ -41,7 +41,7 @@ samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
 
 cuffquant --library-type=fr-firststrand $MALGFFPATH Aligned.out.sorted.sam
 
-rm Aligned.out.sam
+# rm Aligned.out.sam
 rm Aligned.out.bam
 rm Aligned.out.sorted.sam
 
@@ -54,7 +54,7 @@ samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
 
 cuffquant --library-type=fr-firststrand $HUMGFFPATH Aligned.out.sorted.sam
 
-rm Aligned.out.sam
+# rm Aligned.out.sam
 rm Aligned.out.bam
 rm Aligned.out.sorted.sam
 
