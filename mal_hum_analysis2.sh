@@ -34,7 +34,7 @@ gzip *.fastq
 
 cd STAR_out_mal
 samtools view -h Aligned.out.sam > Aligned.out.bam
-samtools sort Aligned.out.bam > Aligned.out.sorted
+samtools sort -o Aligned.out.sorted.bam Aligned.out.bam
 samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
 
 # htseq-count --order=pos --stranded=reverse --mode=intersection-nonempty --type=gene --idattr=ID Aligned.out.sorted.sam $MALGFFPATH > $DIR.txt
@@ -47,7 +47,7 @@ rm Aligned.out.sorted.sam
 
 cd ../STAR_out_hum
 samtools view -h Aligned.out.sam > Aligned.out.bam
-samtools sort Aligned.out.bam > Aligned.out.sorted
+samtools sort -o Aligned.out.sorted.bam Aligned.out.bam
 samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
 
 # htseq-count --order=pos --stranded=reverse --mode=intersection-nonempty --type=exon --idattr=gene_id Aligned.out.sorted.sam $HUMGFFPATH > $DIR.txt
