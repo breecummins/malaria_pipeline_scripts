@@ -20,46 +20,43 @@ do
 cd $DIR
 gzip -d *.gz
 cat *.fastq > combined.fastq
-gzip *.fastq
 
 mkdir STAR_out_mal
-mkdir STAR_out_hum
 
 STAR --runThreadN 1 --runMode alignReads --genomeDir $MALGENOMEDIR --readFilesIn ./combined.fastq --outFilterType BySJout --alignIntronMin 10 --alignIntronMax 3000 --outFileNamePrefix ./STAR_out_mal/ --outFilterIntronMotifs RemoveNoncanonical
 
-cd STAR_out_mal
-samtools view -h Aligned.out.sam > Aligned.out.bam
-samtools sort -o Aligned.out.sorted.bam Aligned.out.bam
-# samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
-
-# cuffquant --library-type=fr-firststrand $MALGFFPATH Aligned.out.sorted.sam
-cuffquant --library-type=fr-firststrand $MALGFFPATH Aligned.out.sorted.bam
-
-
-rm Aligned.out.sam
-rm Aligned.out.bam
-# rm Aligned.out.sorted.sam
-rm Aligned.out.sorted.bam
-
-cd ..
+mkdir STAR_out_hum
 
 STAR --runThreadN 1 --runMode alignReads --genomeDir $HUMGENOMEDIR --readFilesIn ./combined.fastq --outFilterType BySJout --outFileNamePrefix ./STAR_out_hum/ --outFilterIntronMotifs RemoveNoncanonical
 
 rm combined.fastq
+gzip *.fastq
 
-cd STAR_out_hum
+cd STAR_out_mal
 samtools view -h Aligned.out.sam > Aligned.out.bam
 samtools sort -o Aligned.out.sorted.bam Aligned.out.bam
-# samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
+samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
 
-# cuffquant --library-type=fr-firststrand $HUMGFFPATH Aligned.out.sorted.sam
-cuffquant --library-type=fr-firststrand $HUMGFFPATH Aligned.out.sorted.bam
+# htseq-count --order=pos --stranded=reverse --mode=intersection-nonempty --type=gene --idattr=ID Aligned.out.sorted.sam $MALGFFPATH > $DIR.txt
 
-rm Aligned.out.sam
+cuffquant --library-type=fr-firststrand $MALGFFPATH Aligned.out.sorted.sam
+
+# rm Aligned.out.sam
 rm Aligned.out.bam
-# rm Aligned.out.sorted.sam
-rm Aligned.out.sorted.bam
+rm Aligned.out.sorted.sam
 
+cd ../STAR_out_hum
+samtools view -h Aligned.out.sam > Aligned.out.bam
+samtools sort -o Aligned.out.sorted.bam Aligned.out.bam
+samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
+
+# htseq-count --order=pos --stranded=reverse --mode=intersection-nonempty --type=exon --idattr=gene_id Aligned.out.sorted.sam $HUMGFFPATH > $DIR.txt
+
+cuffquant --library-type=fr-firststrand $HUMGFFPATH Aligned.out.sorted.sam
+
+# rm Aligned.out.sam
+rm Aligned.out.bam
+rm Aligned.out.sorted.sam
 
 cd ../..
 done
