@@ -8,6 +8,7 @@ RESULTSDIR="results_$SAMPDIR"
 
 mkdir RESULTSDIR
 cd SAMPDIR
+pwd
 
 for DIR in `ls -d */`
 do
