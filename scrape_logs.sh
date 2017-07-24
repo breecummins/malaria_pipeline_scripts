@@ -12,10 +12,15 @@ cd $SAMPDIR
 for DIR in `ls -d */`
 do
 cd $DIR
-cp ./STAR_out_mal/abundances.cxb ../../$RESULTSDIR/abundances_$DIR_mal.cxb
-cp ./STAR_out_mal/Log.final.out ../../$RESULTSDIR/Log_$DIR_mal.final.out
-cp ./STAR_out_hum/abundances.cxb ../../$RESULTSDIR/abundances_$DIR_hum.cxb
-cp ./STAR_out_hum/Log.final.out ../../$RESULTSDIR/Log_$DIR_hum.final.out
+ABUNMAL="abundances_$DIR_mal.cxb"
+ABUNHUM="abundances_$DIR_hum.cxb"
+LOGMAL="Log_$DIR_mal.final.out"
+LOGHUM="Log_$DIR_hum.final.out"
+
+cp -v ./STAR_out_mal/abundances.cxb ../../$RESULTSDIR/$ABUNMAL
+cp -v ./STAR_out_mal/Log.final.out ../../$RESULTSDIR/$LOGMAL
+cp -v ./STAR_out_hum/abundances.cxb ../../$RESULTSDIR/$ABUNHUM
+cp -v ./STAR_out_hum/Log.final.out ../../$RESULTSDIR/$LOGHUM
 cd ..
 done
 
