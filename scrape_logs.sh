@@ -9,7 +9,7 @@ RESULTSDIR="results_$SAMPDIR"
 mkdir $RESULTSDIR
 cd $SAMPDIR
 
-for DIR in `ls -d */`
+for DIR in `ls -d *`
 do
 cd $DIR
 ABUNMAL=abundances_"$DIR"_mal.cxb
