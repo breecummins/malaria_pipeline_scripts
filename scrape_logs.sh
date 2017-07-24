@@ -6,9 +6,8 @@ SAMPLENUM=$1
 SAMPDIR="Sample$SAMPLENUM"
 RESULTSDIR="results_$SAMPDIR"
 
-mkdir RESULTSDIR
-cd SAMPDIR
-pwd
+mkdir $RESULTSDIR
+cd $SAMPDIR
 
 for DIR in `ls -d */`
 do
