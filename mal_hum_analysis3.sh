@@ -1,11 +1,13 @@
 #!/usr/bin/bash
 
-# Altered Tina's script for malaria and human genome
+# Altered Tina's script for malaria and human genome, reorganized to reduce memory footprint and use .bam file with cuffquant, choosing not to put .bam sorting in STAR because of reported memory usage problems on the web
 
-# call as: screen -d -m srun --partition=harerlab --mem=0 --output=slurm.log ./mal_hum_analysis2.sh <top level data dir>
+# call as: screen -d -m srun --partition=harerlab --mem=0 --output=slurm.log ./mal_hum_analysis3.sh <top level data dir>
+
 # --mem=0 required to access all memory on node
 
-# DATADIR=/work/bc187/Cho_4189_170609A5
+# Example argument: <top level data dir> = /work/bc187/malariadataJuly2017
+
 DATADIR=$1
 
 MALGENOMEDIR=/work/bc187/vivax_genome/star_format
