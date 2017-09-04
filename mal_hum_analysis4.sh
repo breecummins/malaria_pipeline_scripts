@@ -21,9 +21,9 @@ for DIR in `ls -d */`
 do
 echo $DIR
 cd $DIR
-gzip -d *.gz
+gzip -d -k *.gz
 cat *.fastq > combined.fastq
-gzip O*.fastq
+rm O*.fastq
 
 mkdir STAR_out_mal
 mkdir STAR_out_hum
