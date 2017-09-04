@@ -22,6 +22,7 @@ do
 echo $DIR
 cd $DIR
 for FILE in `ls *.gz`
+do
 gzip -d -c $FILE > "${FILE%.*}"
 done
 cat *.fastq > combined.fastq
