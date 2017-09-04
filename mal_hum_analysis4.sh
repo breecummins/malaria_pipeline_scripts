@@ -21,7 +21,9 @@ for DIR in `ls -d */`
 do
 echo $DIR
 cd $DIR
-gzip -d -k *.gz
+for FILE in `ls *.gz`
+gzip -d -c $FILE > "${FILE%.*}"
+done
 cat *.fastq > combined.fastq
 rm O*.fastq
 
