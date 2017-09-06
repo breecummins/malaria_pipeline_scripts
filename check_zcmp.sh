@@ -19,7 +19,7 @@ if [[ `wc -l temp.txt`==0 ]];
 	then echo "$FILE passed"
 else
 	echo "$FILE failed"
-	echo $FILE >> comparison_checksum_failures.txt
+	echo $FILE >> zcmp_failures.txt
 fi
 done
 cd ..
