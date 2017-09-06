@@ -8,6 +8,7 @@ cd $SAMPDIR
 
 for DIR in `ls -d *`
 do
+echo $DIR
 cd $DIR
 for FILE in `ls *.fastq.gz`
 do
