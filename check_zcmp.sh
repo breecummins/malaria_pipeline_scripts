@@ -15,7 +15,7 @@ do
 # have reference checksummed .fastq.gz files in current directory
 zcmp $FILE "$REF_PATH/$FILE" > temp.txt 
 
-if [[ -s temp.txt ]];
+if [[ `wc -l temp.txt`==0 ]];
 	then echo "$FILE passed"
 else
 	echo "$FILE failed"
