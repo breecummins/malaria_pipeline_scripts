@@ -1,14 +1,24 @@
 #!/usr/bin/bash
 
-PATH_TO_FNAME=$1
-FNAME=$(basename $PATH_TO_FNAME)
+REF_PATH='/work/bc187/malariadataJuly2017/REDOWNLOAD_FOR_CHECKSUMS/allfiles/'
 
+SAMPLENUM=$1
+SAMPDIR="Sample$SAMPLENUM"
+cd $SAMPDIR
+
+for DIR in `ls -d *`
+do
+cd $DIR
+for FILE in `ls *.fastq.gz`
+do
 # have reference checksummed .fastq.gz files in current directory
-
-zcmp $FNAME $PATH_TO_FNAME > temp.txt 
+zcmp $FILE "$REF_PATH/$FILE" > temp.txt 
 
 if [[ -s temp.txt ]]; 
-	then echo "Passed"
+	then echo "$FILE passed"
 else
-	echo $FNAME >> comparison_checksum_failures.txt
+	echo $FILE >> comparison_checksum_failures.txt
 fi
+done
+cd ..
+done
