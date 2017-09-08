@@ -1,10 +1,7 @@
 #!/usr/bin/bash
 
 REF_PATH='/work/bc187/malariadataJuly2017/REDOWNLOAD_FOR_CHECKSUMS/allfiles/'
-
-SAMPLENUM=$1
-SAMPDIR="Sample$SAMPLENUM"
-cd $SAMPDIR
+cd $1 #example argument: /work/bc187/malariadataJuly2017/Sample10/firstrun
 
 for DIR in `ls -d *`
 do
