@@ -1,5 +1,7 @@
 #!/usr/bin/bash
 
+# This script checks checksums for files that were unzipped and rezipped, since the zipping process changes the checksum.
+
 REF_PATH='/work/bc187/malariadataJuly2017/REDOWNLOAD_FOR_CHECKSUMS/allfiles/'
 cd $1 #example argument: /work/bc187/malariadataJuly2017/Sample10/firstrun
 

@@ -1,51 +1,69 @@
 #!/usr/bin/bash
 
-#Tina's script for malaria and human genome
+# Altered Tina's script for malaria and human genome, reorganized to reduce memory footprint and use .bam file with cuffquant, choosing not to put .bam sorting in STAR because of reported memory usage problems on the web
 
-for FILE in `ls`
+# call as: screen -d -m srun --partition=harerlab --mem=0 --output=slurm.log ./mal_hum_analysis.sh <top level data dir>
+
+# --mem=0 required to access all memory on node
+
+# Example argument: <top level data dir> = /work/bc187/malariadataJuly2017/Sample02 or /work/bc187/malariadataJuly2017/Sample02/secondrun 
+
+DATADIR=$1
+
+MALGENOMEDIR=/work/bc187/vivax_genome/star_format
+MALGFFPATH=/work/bc187/vivax_genome/PlasmoDB-32_PvivaxP01.gff
+HUMGENOMEDIR=/work/bc187/human_genome/star_format
+HUMGFFPATH=/work/bc187/human_genome/Homo_sapiens/NCBI/GRCh38/Annotation/Genes.gencode/genes.gtf
+
+cd $DATADIR
+
+for DIR in `ls -d */`
 do
-cd $FILE
-gzip -d *.gz
+echo $DIR
+cd $DIR
+for FILE in `ls *.gz`
+do
+gzip -d -c $FILE > "${FILE%.*}"
+done
 cat *.fastq > combined.fastq
+rm O*.fastq
 
 mkdir STAR_out_mal
-
-STAR --runThreadN 1 --runMode alignReads --genomeDir <path_to_STAR_genomebuild> --readFilesIn ./combined.fastq --outFilterType BySJout --alignIntronMin 10 --alignIntronMax 3000 --outFileNamePrefix ./STAR_out_mal/ --outFilterIntronMotifs RemoveNoncanonical
-
 mkdir STAR_out_hum
 
-STAR --runThreadN 1 --runMode alignReads --genomeDir <path_to_STAR_genomebuild> --readFilesIn ./combined.fastq --outFilterType BySJout --outFileNamePrefix ./STAR_out_hum/ --outFilterIntronMotifs RemoveNoncanonical
-
-rm combined.fastq
-gzip *.fastq
+STAR --runThreadN 1 --runMode alignReads --genomeDir $MALGENOMEDIR --readFilesIn ./combined.fastq --outFilterType BySJout --alignIntronMin 10 --alignIntronMax 3000 --outFileNamePrefix ./STAR_out_mal/ --outFilterIntronMotifs RemoveNoncanonical
 
 cd STAR_out_mal
 samtools view -h Aligned.out.sam > Aligned.out.bam
-samtools sort Aligned.out.bam Aligned.out.sorted
-samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
+samtools sort -o Aligned.out.sorted.bam Aligned.out.bam
+# samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
+# cuffquant --library-type=fr-firststrand $MALGFFPATH Aligned.out.sorted.sam
+cuffquant --library-type=fr-firststrand $MALGFFPATH Aligned.out.sorted.bam
 
-htseq-count --order=pos --stranded=reverse --mode=intersection-nonempty --type=gene --idattr=ID Aligned.out.sorted.sam <path_to_GFF/GTF_transcriptome_annot> > $FILE.txt
-
-cuffquant --library-type=fr-firststrand <path_to_GFF/GTF_transcriptome_annot> Aligned.out.sorted.sam
 
 rm Aligned.out.sam
 rm Aligned.out.bam
-rm Aligned.out.sorted.sam
+# rm Aligned.out.sorted.sam
+rm Aligned.out.sorted.bam
 
 cd ..
+
+STAR --runThreadN 1 --runMode alignReads --genomeDir $HUMGENOMEDIR --readFilesIn ./combined.fastq --outFilterType BySJout --outFileNamePrefix ./STAR_out_hum/ --outFilterIntronMotifs RemoveNoncanonical
+
+rm combined.fastq
+
 cd STAR_out_hum
 samtools view -h Aligned.out.sam > Aligned.out.bam
-samtools sort Aligned.out.bam Aligned.out.sorted
-samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
-
-htseq-count --order=pos --stranded=reverse --mode=intersection-nonempty --type=exon --idattr=gene_id Aligned.out.sorted.sam <path_to_GFF/GTF_transcriptome_annot> > $FILE.txt
-
-cuffquant --library-type=fr-firststrand <path_to_GFF/GTF_transcriptome_annot> Aligned.out.sorted.sam
+samtools sort -o Aligned.out.sorted.bam Aligned.out.bam
+# samtools view -h Aligned.out.sorted.bam > Aligned.out.sorted.sam
+# cuffquant --library-type=fr-firststrand $HUMGFFPATH Aligned.out.sorted.sam
+cuffquant --library-type=fr-firststrand $HUMGFFPATH Aligned.out.sorted.bam
 
 rm Aligned.out.sam
 rm Aligned.out.bam
-rm Aligned.out.sorted.sam
+# rm Aligned.out.sorted.sam
+rm Aligned.out.sorted.bam
 
-cd ..
-cd ..
+
+cd ../..
 done
